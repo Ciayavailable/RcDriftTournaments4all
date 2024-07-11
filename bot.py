@@ -42,8 +42,13 @@ async def start(message: types.Message):
 
 @dp.message(F.text=="Создать турнир")
 async def start(message: types.Message):
-    await message.answer("Введите имена пилотов одним сообщением.")
+    await message.answer("Введите имена пилотов одним сообщением в порядке резултатов квалификации (от 1 места до последнего).")
 
+@dp.message()
+async def tournament_cereator(message: types.Message):
+    racers = message.text
+    list_of_racers = racers.split()
+    await message.answer(f'list_of_racers={list_of_racers}')
 
 # Запуск процесса поллинга новых апдейтов
 async def main():
