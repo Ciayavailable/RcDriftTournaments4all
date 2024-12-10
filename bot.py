@@ -66,7 +66,7 @@ async def help(message: types.Message):
 
 @dp.message(Command("contacts"))
 async def help(message: types.Message):
-    await message.answer("Номер для связи с админом +7 912(048)31-53")
+    await message.answer("Номер для связи с админом +7(912)048-31-53")
     
 @dp.message(Command("tournament"))
 async def help(message: types.Message):
