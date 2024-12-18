@@ -10,6 +10,8 @@ from aiogram.types import BotCommand
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from aiogram import F
 from aiogram.types import CallbackQuery
+from keyboard import run_result_keyboard
+
 
 from utils import get_runs, setka_creator_8, setka_jpg
 
@@ -57,15 +59,15 @@ async def help(message: types.Message):
     await message.answer("Нажми на кнопку 'Создать турнир' или нажми на команду /tournament в меню.")
     
 @dp.message(Command("support"))
-async def help(message: types.Message):
+async def support(message: types.Message):
     await message.answer("Тг для связи с поддержкой @twentypeek")
 
 @dp.message(Command("contacts"))
-async def help(message: types.Message):
+async def contacts(message: types.Message):
     await message.answer("Номер для связи с админом +7(912)048-31-53")
     
 @dp.message(Command("tournament"))
-async def help(message: types.Message):
+async def tournament(message: types.Message):
     await message.answer("Введите имена пилотов одним сообщением в порядке результатов квалификации (от 1 места до последнего).")
 
 @dp.message(F.text == "Создать турнир")
@@ -82,11 +84,12 @@ async def tournament_cereator(message: types.Message):
     setka = setka_creator_8(list_of_racers)
     runs = get_runs(setka)
     for run in runs:
-        await message.answer(f"run={run}")
+        markup = run_result_keyboard(pilot1=run[1], pilot2=run[2], run_number=run[0])
+        await message.answer(f'Введите победителя заезда приведённого ниже', reply_markup=markup)
     setka_jpg(setka)
     # Отправка файла из файловой системы
     image_from_pc = FSInputFile("result.jpg")
-    result = await message.answer_photo(
+    await message.answer_photo(
         image_from_pc, caption="Изображение из файла на компьютере"
     )
     # await message.answer(f"list_of_racers={list_of_racers}")
