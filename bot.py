@@ -7,6 +7,9 @@ from aiogram.types import FSInputFile
 from dotenv import dotenv_values
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from aiogram import F
+from aiogram.types import CallbackQuery
 
 from utils import get_runs, setka_creator_8, setka_jpg
 
@@ -17,6 +20,9 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=config["TG_TOKEN"])  # type: ignore
 # Диспетчер
 dp = Dispatcher()
+
+# Создаем объекты инлайн-кнопок
+
 
 
 async def set_main_menu(bot: Bot):
@@ -40,20 +46,10 @@ dp.startup.register(set_main_menu)
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    kb = [
-        [
-            types.KeyboardButton(text="Создать турнир"),
-            types.KeyboardButton(text="Помощь"),
-        ],
-    ]
-    keyboard = types.ReplyKeyboardMarkup(
-        keyboard=kb,
-        resize_keyboard=True,
-    )
     await message.answer(
         "Привет, ты зашел в бота Rctournaments4all, что бы ты хотел сделать?",
-        reply_markup=keyboard,
     )
+
 
 
 @dp.message(Command("help"))
